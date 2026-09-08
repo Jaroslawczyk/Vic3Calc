@@ -1,0 +1,96 @@
+/* ============================================================================
+ * app/styles/02-base.css - Reset, typography, and the paper itself.
+ * ==========================================================================*/
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: var(--paper-grain);
+  /* Numbers in a column must line up; that is the whole point of a ledger. */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;               /* the app manages its own scroll regions */
+  user-select: none;
+}
+
+/* Text the user might genuinely want to copy stays selectable. */
+p, code, pre, td, .v3-alm-content, .v3-mono, input, textarea { user-select: text; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: .02em;
+}
+h1 { font-size: var(--fs-xl); }
+h2 { font-size: var(--fs-md); }
+h3 { font-size: var(--fs-base); }
+h4 { font-size: var(--fs-sm); }
+
+p { margin: 0 0 .7em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--accent); }
+
+code, pre, .v3-mono {
+  font-family: var(--font-mono);
+  font-size: .92em;
+}
+
+ul, ol { margin: 0; padding-left: 1.4em; }
+
+img { -webkit-user-drag: none; }
+
+/* ---------------------------------------------------------------------------
+ * Scrollbars, dressed to match the paper rather than the operating system.
+ * ------------------------------------------------------------------------ */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--paper-sunk); }
+::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border: 3px solid var(--paper-sunk);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--rule-strong); }
+::-webkit-scrollbar-corner { background: var(--paper-sunk); }
+
+/* ---------------------------------------------------------------------------
+ * Focus. Visible, but in the period palette rather than the browser's blue.
+ * ------------------------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Numeric emphasis used across the app.
+ * ------------------------------------------------------------------------ */
+.v3-num { text-align: right; font-variant-numeric: tabular-nums; }
+.is-good { color: var(--ok); }
+.is-bad  { color: var(--bad); }
+.v3-ok   { color: var(--ok); }
+
+/* An arrow between input and output. Reads the same in every language. */
+.v3-arrow {
+  color: var(--ink-faint);
+  font-size: var(--fs-md);
+  padding: 0 var(--gap-xs);
+  flex: none;
+}
+
+.v3-hint {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: var(--gap-xs) 0 var(--gap-sm);
+}

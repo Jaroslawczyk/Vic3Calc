@@ -1,0 +1,15 @@
+# Browser profile created by the launcher (lives in %LOCALAPPDATA%, but just
+# in case someone points it here) / профиль браузера, создаваемый лаунчером
+.appdata/
+browser/
+
+# Exported packs people keep next to the app while testing
+*.v3pack.json
+*.v3chain.json
+
+# Windows / editors
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

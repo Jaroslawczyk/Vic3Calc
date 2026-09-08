@@ -1,0 +1,457 @@
+/* ============================================================================
+ * app/styles/03-components.css - The shared pieces from ui/components.js.
+ * ==========================================================================*/
+
+/* ---------------------------------------------------------------------------
+ * PANELS - the framed box everything sits in. Double rule at the head, as a
+ * printed table would have.
+ * ------------------------------------------------------------------------ */
+.v3-panel {
+  background: var(--card);
+  border: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--gap);
+}
+
+.v3-panel-head {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 7px var(--gap);
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border-bottom: 3px double var(--rule-strong);
+}
+
+.v3-panel-title {
+  flex: 1;
+  font-variant: small-caps;
+  letter-spacing: .06em;
+  color: var(--accent);
+}
+
+.v3-panel-actions { display: flex; gap: var(--gap-xs); }
+.v3-panel-body { padding: var(--gap); }
+
+/* A section rule with a caption sitting on it. */
+.v3-rule {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  margin: var(--gap) 0 var(--gap-sm);
+  font-variant: small-caps;
+  letter-spacing: .08em;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
+.v3-rule::before, .v3-rule::after {
+  content: "";
+  height: 3px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.v3-rule::before { width: 14px; flex: none; }
+.v3-rule::after  { flex: 1; }
+
+.v3-empty {
+  text-align: center;
+  padding: var(--gap-lg) var(--gap);
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.v3-empty-icon { font-size: var(--fs-xxl); opacity: .5; }
+
+/* ---------------------------------------------------------------------------
+ * ICONS AND QUANTITIES - the app's core vocabulary.
+ * ------------------------------------------------------------------------ */
+.v3-icon {
+  flex: none;
+  image-rendering: auto;
+  vertical-align: middle;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+}
+.v3-icon-fallback {
+  display: inline-block;
+  text-align: center;
+  color: #f3ecdb;
+  font-family: var(--font-display);
+  border-radius: 2px;
+}
+
+.v3-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 5px 1px 2px;
+  background: var(--paper-3);
+  border: 1px solid var(--rule-hair);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}
+.v3-qty-n { font-weight: 700; font-variant-numeric: tabular-nums; }
+.v3-qty-label { color: var(--ink-soft); }
+.v3-qty.is-in  { border-color: var(--ok-soft); }
+.v3-qty.is-out { border-color: var(--accent-soft); }
+.v3-qty-pop    { background: var(--paper-2); }
+
+.v3-qty-row { display: flex; flex-wrap: wrap; gap: var(--gap-xs); }
+
+.v3-icon-row { display: flex; flex-wrap: wrap; gap: 3px; }
+.v3-icon-btn {
+  background: none; border: 1px solid transparent; padding: 1px;
+  cursor: pointer; border-radius: var(--radius); line-height: 0;
+}
+.v3-icon-btn:hover { border-color: var(--brass); background: var(--paper-3); }
+
+/* ---------------------------------------------------------------------------
+ * BADGES AND PILLS
+ * ------------------------------------------------------------------------ */
+.v3-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px; height: 15px;
+  margin-left: 3px;
+  font-size: 10px;
+  font-family: var(--font-body);
+  border-radius: 8px;
+  vertical-align: super;
+  cursor: help;
+}
+.v3-badge-approx { background: var(--warn); color: #fff; font-weight: 700; }
+.v3-badge-user   { background: var(--brass); color: #2b2118; }
+.v3-badge-lock   { background: none; font-size: 11px; }
+
+.v3-pill {
+  display: inline-block;
+  padding: 0 6px;
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  color: var(--ink-soft);
+}
+.v3-pill-import { border-color: var(--brass); color: var(--brass); }
+
+.v3-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  font-size: var(--fs-xs);
+  background: var(--paper-2);
+  border: 1px solid var(--rule-hair);
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+.v3-chip.is-good { border-color: var(--ok-soft); color: var(--ok); }
+.v3-chip.is-bad  { border-color: var(--bad);     color: var(--bad); }
+
+/* ---------------------------------------------------------------------------
+ * INPUTS
+ * ------------------------------------------------------------------------ */
+.v3-field { display: block; margin-bottom: var(--gap-sm); }
+.v3-field-label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .06em;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+.v3-field-row {
+  display: flex; align-items: center; gap: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+}
+
+.v3-input, .v3-select {
+  width: 100%;
+  padding: 4px 7px;
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  color: var(--ink);
+  background: var(--paper-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(43,33,24,.10) inset;
+}
+.v3-input:focus, .v3-select:focus { border-color: var(--brass); }
+.v3-input-num { width: 84px; text-align: right; font-variant-numeric: tabular-nums; }
+.v3-select { cursor: pointer; }
+
+.v3-check {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 5px; cursor: pointer;
+  font-size: var(--fs-sm);
+}
+.v3-check input { accent-color: var(--accent); }
+
+/* ---------------------------------------------------------------------------
+ * BUTTONS - pressed-brass look, square-ish, with a real "down" state.
+ * ------------------------------------------------------------------------ */
+.v3-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  color: var(--ink);
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 0 rgba(255,255,255,.45) inset, 0 1px 2px rgba(43,33,24,.2);
+  cursor: pointer;
+}
+.v3-btn:hover { background: linear-gradient(var(--paper-3), var(--paper-3)); border-color: var(--brass); }
+.v3-btn:active { box-shadow: 0 1px 3px rgba(43,33,24,.35) inset; transform: translateY(1px); }
+.v3-btn:disabled { opacity: .45; cursor: default; }
+
+.v3-btn-primary {
+  color: #f5eeda;
+  background: linear-gradient(var(--accent-soft), var(--accent));
+  border-color: var(--accent);
+}
+.v3-btn-primary:hover { background: linear-gradient(var(--accent-soft), var(--accent-soft)); }
+
+.v3-btn-danger {
+  color: #f5eeda;
+  background: linear-gradient(#a5493c, var(--bad));
+  border-color: var(--bad);
+}
+
+.v3-btn-ghost { background: none; box-shadow: none; }
+.v3-btn-tiny { padding: 1px 6px; font-size: var(--fs-xs); }
+
+.v3-btn-row { display: flex; flex-wrap: wrap; gap: var(--gap-xs); margin-top: var(--gap-sm); }
+.v3-btn-row > .v3-btn { flex: 1 1 auto; justify-content: center; }
+
+/* A bare × for removing a row. */
+.v3-x {
+  border: none; background: none; cursor: pointer;
+  color: var(--ink-faint); font-size: var(--fs-md); line-height: 1;
+  padding: 0 4px; border-radius: var(--radius);
+}
+.v3-x:hover { color: var(--bad); background: var(--paper-2); }
+
+/* ---------------------------------------------------------------------------
+ * BARS - proportion at a glance, no reading required.
+ * ------------------------------------------------------------------------ */
+.v3-bar {
+  display: flex;
+  height: 6px;
+  margin-top: 4px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule-hair);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.v3-bar.is-tall { height: 12px; }
+.v3-bar-seg { display: block; height: 100%; }
+
+/* ---------------------------------------------------------------------------
+ * ALERTS AND NOTES
+ * ------------------------------------------------------------------------ */
+.v3-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-sm);
+  padding: 6px 10px;
+  margin-bottom: var(--gap-xs);
+  font-size: var(--fs-sm);
+  border-left: 4px solid var(--warn);
+  background: var(--paper-3);
+  border-top: 1px solid var(--rule-hair);
+  border-right: 1px solid var(--rule-hair);
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-alert-error { border-left-color: var(--bad); }
+.v3-alert-mark {
+  flex: none;
+  font-weight: 700;
+  color: var(--warn);
+  font-family: var(--font-display);
+}
+.v3-alert-error .v3-alert-mark { color: var(--bad); }
+.v3-alert-text { flex: 1; }
+.v3-alert .v3-btn { margin-left: auto; flex: none; }
+
+.v3-note {
+  display: flex;
+  gap: var(--gap-sm);
+  padding: 10px 12px;
+  margin: var(--gap) 0;
+  border: 1px solid var(--rule);
+  border-left-width: 4px;
+  background: var(--paper-3);
+}
+.v3-note.is-tip  { border-left-color: var(--ok); }
+.v3-note.is-warn { border-left-color: var(--bad); }
+.v3-note-mark {
+  flex: none; width: 20px; height: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-family: var(--font-display);
+  border-radius: 50%;
+  color: #f3ecdb;
+}
+.v3-note.is-tip  .v3-note-mark { background: var(--ok); }
+.v3-note.is-warn .v3-note-mark { background: var(--bad); }
+.v3-note p { margin: 0; }
+
+/* ---------------------------------------------------------------------------
+ * FORMULA STRIPS - "here is how that number was made".
+ * ------------------------------------------------------------------------ */
+/* Formula strips sit inside narrow side panels, so everything here must wrap.
+   An earlier version used `white-space: nowrap` on the expression, which made
+   the panel wider than its column and pushed the explanation off-screen. */
+.v3-formula {
+  margin-top: var(--gap-sm);
+  padding: 6px 8px;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  background: var(--paper-2);
+  border-top: 1px solid var(--rule-hair);
+  color: var(--ink-soft);
+  overflow: hidden;
+}
+.v3-formula-mark {
+  float: left;
+  margin: -1px 6px 0 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-md);
+  color: var(--brass);
+}
+.v3-formula-expr {
+  display: block;
+  color: var(--ink);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  margin-bottom: 3px;
+}
+.v3-formula-note { display: block; font-style: italic; }
+
+.v3-formula-card {
+  padding: 10px 12px;
+  margin-bottom: var(--gap-sm);
+  background: var(--paper-3);
+  border: 1px solid var(--rule-hair);
+  border-left: 3px solid var(--brass);
+}
+.v3-formula-card .v3-formula-expr {
+  display: block; margin-bottom: 4px; white-space: normal;
+  font-size: var(--fs-sm);
+}
+.v3-formula-card .v3-formula-note { font-size: var(--fs-sm); margin: 0; }
+.v3-formula-file {
+  display: block; margin-top: 4px;
+  font-family: var(--font-mono); font-size: var(--fs-xs);
+  color: var(--ink-faint);
+}
+
+/* ---------------------------------------------------------------------------
+ * MODAL
+ * ------------------------------------------------------------------------ */
+.v3-modal-back {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(30, 22, 14, .55);
+  backdrop-filter: blur(1.5px);
+}
+.v3-modal {
+  width: min(860px, 92vw);
+  max-height: 88vh;
+  display: flex; flex-direction: column;
+  background: var(--card);
+  background-image: var(--paper-grain);
+  border: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-lift);
+}
+.v3-modal-head {
+  display: flex; align-items: center; gap: var(--gap);
+  padding: 10px var(--gap-lg);
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border-bottom: 3px double var(--rule-strong);
+}
+.v3-modal-head h2 { flex: 1; font-variant: small-caps; letter-spacing: .06em; color: var(--accent); }
+.v3-modal-x {
+  border: none; background: none; cursor: pointer;
+  font-size: var(--fs-xl); line-height: 1; color: var(--ink-faint);
+}
+.v3-modal-x:hover { color: var(--bad); }
+.v3-modal-body { padding: var(--gap-lg); overflow: auto; flex: 1; }
+.v3-modal-foot {
+  display: flex; justify-content: flex-end; gap: var(--gap-sm);
+  padding: 10px var(--gap-lg);
+  border-top: 3px double var(--rule-strong);
+  background: var(--paper-2);
+}
+
+/* ---------------------------------------------------------------------------
+ * TOASTS
+ * ------------------------------------------------------------------------ */
+#v3-toasts {
+  position: fixed; bottom: 18px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  pointer-events: none;
+}
+.v3-toast {
+  padding: 7px 16px;
+  background: var(--ink);
+  color: var(--paper-3);
+  border: 1px solid var(--brass);
+  box-shadow: var(--shadow-lift);
+  font-size: var(--fs-sm);
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+.v3-toast-error { background: var(--bad); border-color: #f0d0c0; }
+.v3-toast.is-out { opacity: 0; }
+
+/* ---------------------------------------------------------------------------
+ * ICON PICKER
+ * ------------------------------------------------------------------------ */
+.v3-icon-picker-top { display: flex; gap: var(--gap-sm); margin-bottom: var(--gap); }
+.v3-icon-picker-top .v3-input { flex: 1; }
+.v3-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 4px;
+  max-height: 52vh;
+  overflow: auto;
+  padding: 4px;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+}
+.v3-icon-cell {
+  padding: 3px; line-height: 0; cursor: pointer;
+  background: var(--paper-3);
+  border: 1px solid var(--rule-hair);
+  border-radius: var(--radius);
+}
+.v3-icon-cell:hover { border-color: var(--brass); background: var(--paper-2); }
+.v3-icon-cell.is-active { border-color: var(--accent); border-width: 2px; }
+
+.v3-icon-preview { display: flex; align-items: center; gap: var(--gap-sm); }
+
+/* ---------------------------------------------------------------------------
+ * TABLES
+ * ------------------------------------------------------------------------ */
+table { border-collapse: collapse; width: 100%; font-size: var(--fs-sm); }
+thead th {
+  text-align: left;
+  font-family: var(--font-display);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 3px 6px;
+  border-bottom: 3px double var(--rule-strong);
+}
+tbody td { padding: 3px 6px; border-bottom: 1px solid var(--rule-hair); }
+tbody tr:hover { background: var(--paper-3); }

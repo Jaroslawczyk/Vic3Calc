@@ -1,0 +1,140 @@
+/* ============================================================================
+ * app/styles/04-layout.css - The shell: title bar, tabs, three-column screens.
+ * ==========================================================================*/
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ---------------------------------------------------------------------------
+ * TITLE BAR
+ * ------------------------------------------------------------------------ */
+.v3-topbar {
+  display: flex;
+  align-items: stretch;
+  gap: var(--gap-lg);
+  padding: 0 var(--gap-lg);
+  background: linear-gradient(var(--paper-2), var(--paper-sunk));
+  border-bottom: 3px double var(--rule-strong);
+  box-shadow: 0 2px 6px rgba(43,33,24,.18);
+  flex: none;
+  z-index: 20;
+}
+
+.v3-brand {
+  display: flex; align-items: center; gap: var(--gap-sm);
+  padding: 8px 0;
+  border-right: 1px solid var(--rule);
+  padding-right: var(--gap-lg);
+}
+.v3-brand-mark {
+  font-size: var(--fs-xl);
+  color: var(--brass);
+  line-height: 1;
+}
+.v3-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.v3-brand-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-variant: small-caps;
+  letter-spacing: .09em;
+  color: var(--accent);
+}
+.v3-brand-sub {
+  font-size: var(--fs-xs);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ---------------------------------------------------------------------------
+ * TABS - engraved plates along the top edge.
+ * ------------------------------------------------------------------------ */
+.v3-tabs { display: flex; gap: 2px; flex: 1; }
+
+.v3-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  font-variant: small-caps;
+  letter-spacing: .06em;
+  color: var(--ink-soft);
+  background: linear-gradient(var(--paper-2), var(--paper-sunk));
+  border: 1px solid var(--rule);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: pointer;
+}
+.v3-tab:hover { color: var(--ink); background: var(--paper-3); }
+.v3-tab.is-active {
+  color: var(--accent);
+  background: var(--card);
+  border-color: var(--rule-strong);
+  box-shadow: 0 -2px 0 var(--accent) inset;
+  margin-bottom: -3px;
+  padding-bottom: 9px;
+}
+.v3-tab .v3-icon { filter: none; }
+
+.v3-topbar-right { display: flex; align-items: center; }
+.v3-lang { width: auto; min-width: 130px; }
+
+/* ---------------------------------------------------------------------------
+ * MAIN AREA
+ * ------------------------------------------------------------------------ */
+.v3-main {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+}
+.v3-main > * { flex: 1; min-width: 0; }
+
+/* Three-column screens (Calculator, Military). */
+.v3-chain, .v3-military, .v3-data {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr) 340px;
+  gap: var(--gap);
+  padding: var(--gap);
+  height: 100%;
+  overflow: hidden;
+}
+.v3-data { grid-template-columns: 300px minmax(0, 1fr); }
+
+.v3-col-left, .v3-col-right {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 3px;
+}
+.v3-col-mid {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: var(--gap-sm);
+}
+.v3-military .v3-col-mid { overflow-y: auto; }
+
+/* Screens that are just one scrolling column. */
+.v3-browse, .v3-almanac, .v3-settings {
+  height: 100%;
+  overflow: hidden;
+  padding: var(--gap);
+}
+
+/* Wide screens: the side columns can afford more room. */
+@media (min-width: 1700px) {
+  .v3-chain, .v3-military { grid-template-columns: 360px minmax(0, 1fr) 400px; }
+}
+/* Narrow windows: drop the right column under the diagram. */
+@media (max-width: 1180px) {
+  .v3-chain, .v3-military {
+    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .v3-col-right { grid-column: 1 / -1; max-height: 40vh; }
+}

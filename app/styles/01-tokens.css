@@ -1,0 +1,133 @@
+/* ============================================================================
+ * app/styles/01-tokens.css - The whole visual language, in one place.
+ * ---------------------------------------------------------------------------
+ * EN: Change a colour here and it changes everywhere. No component file may
+ *     hard-code a colour; if you need a new one, add a token.
+ *
+ *     THE LOOK: a mid-century-1800s ledger. Warm rag paper, iron-gall ink,
+ *     oxblood for section rules, brass for the things that matter. Two rules
+ *     rather than one, because that is what printed tables did. Small caps and
+ *     wide letter-spacing on headings; tabular figures everywhere numbers line
+ *     up in a column.
+ *
+ *     Fonts are system serifs on purpose - the app has to run from a folder
+ *     with no internet, so nothing may be downloaded.
+ *
+ * RU: Измените цвет здесь - он изменится везде. Ни один файл компонентов не
+ *     имеет права прописывать цвет напрямую; нужен новый - добавьте токен.
+ *
+ *     ОБЛИК: бухгалтерская книга середины XIX века. Тёплая тряпичная бумага,
+ *     железо-галловые чернила, бычья кровь для линеек, латунь для важного.
+ *     Двойные линейки, как в печатных таблицах. Капитель и разрядка в
+ *     заголовках; табличные цифры везде, где числа стоят столбцом.
+ *
+ *     Шрифты - системные с засечками, и это намеренно: программа работает из
+ *     папки без интернета, ничего нельзя подгружать.
+ * ==========================================================================*/
+
+:root,
+body[data-theme="parchment"] {
+  /* --- surfaces --------------------------------------------------------- */
+  --paper:        #e7dcc3;
+  --paper-2:      #dccdac;
+  --paper-3:      #f3ecdb;
+  --paper-sunk:   #d3c39f;
+  --card:         #f0e8d5;
+
+  /* --- ink -------------------------------------------------------------- */
+  --ink:          #2b2118;
+  --ink-soft:     #5c4c39;
+  --ink-faint:    #8a775c;
+
+  /* --- rules and edges -------------------------------------------------- */
+  --rule:         #b39d76;
+  --rule-strong:  #877050;
+  --rule-hair:    #c9b791;
+
+  /* --- accents ---------------------------------------------------------- */
+  --accent:       #7c2f2c;   /* oxblood - section rules, active states */
+  --accent-soft:  #9c4b45;
+  --brass:        #a8873f;   /* the "this matters" colour */
+  --brass-soft:   #c4a866;
+
+  /* --- semantic --------------------------------------------------------- */
+  --ok:           #4c6b42;
+  --ok-soft:      #6e8c62;
+  --bad:          #8f382c;
+  --warn:         #a4722a;
+
+  /* --- data colours ----------------------------------------------------- */
+  --strata-poor:   #7a6a4e;
+  --strata-middle: #5b6f78;
+  --strata-upper:  #8a6a3c;
+  --edge:          #6b5a42;
+  --edge-back:     #8f5a52;
+
+  /* --- type ------------------------------------------------------------- */
+  --font-display: "Bookman Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body:    Georgia, "Times New Roman", "PT Serif", serif;
+  --font-mono:    "Consolas", "Courier New", monospace;
+
+  --fs-xs:   11px;
+  --fs-sm:   12.5px;
+  --fs-base: 14px;
+  --fs-md:   16px;
+  --fs-lg:   20px;
+  --fs-xl:   26px;
+  --fs-xxl:  34px;
+
+  /* --- geometry --------------------------------------------------------- */
+  --gap-xs: 4px;
+  --gap-sm: 8px;
+  --gap:    14px;
+  --gap-lg: 22px;
+  --radius: 3px;          /* almost square - period printing had no rounding */
+
+  /* --- effects ---------------------------------------------------------- */
+  --shadow-card: 0 1px 0 rgba(255,255,255,.5) inset, 0 2px 6px rgba(43,33,24,.16);
+  --shadow-lift: 0 4px 18px rgba(43,33,24,.28);
+  --paper-grain:
+    repeating-linear-gradient(0deg, rgba(120,95,60,.022) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120,95,60,.018) 0 1px, transparent 1px 4px);
+}
+
+/* ---------------------------------------------------------------------------
+ * Lamplight: the same ledger, read at night by an oil lamp. Warm, never blue.
+ * ------------------------------------------------------------------------ */
+body[data-theme="night"] {
+  --paper:        #211c15;
+  --paper-2:      #191510;
+  --paper-3:      #2b241b;
+  --paper-sunk:   #14110c;
+  --card:         #292219;
+
+  --ink:          #e0d4ba;
+  --ink-soft:     #ab9a7c;
+  --ink-faint:    #7d6e55;
+
+  --rule:         #4e4231;
+  --rule-strong:  #6b5b42;
+  --rule-hair:    #3b3226;
+
+  --accent:       #a94a42;
+  --accent-soft:  #c46a60;
+  --brass:        #c9a462;
+  --brass-soft:   #ddc189;
+
+  --ok:           #7c9c6a;
+  --ok-soft:      #98b487;
+  --bad:          #c46454;
+  --warn:         #d0a05a;
+
+  --strata-poor:   #9a8763;
+  --strata-middle: #7391a0;
+  --strata-upper:  #c2a05e;
+  --edge:          #9a8763;
+  --edge-back:     #c4736a;
+
+  --shadow-card: 0 1px 0 rgba(255,230,190,.05) inset, 0 2px 8px rgba(0,0,0,.5);
+  --shadow-lift: 0 6px 24px rgba(0,0,0,.65);
+  --paper-grain:
+    repeating-linear-gradient(0deg, rgba(255,225,180,.014) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255,225,180,.010) 0 1px, transparent 1px 4px);
+}

@@ -1,0 +1,456 @@
+/* ============================================================================
+ * app/styles/05-chain.css - The Calculator screen: diagram, summary, order.
+ * ==========================================================================*/
+
+/* ---------------------------------------------------------------------------
+ * SUMMARY STRIP - the headline numbers, sitting above the diagram.
+ * ------------------------------------------------------------------------ */
+.v3-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-card);
+  flex: none;
+}
+.v3-stat {
+  flex: 1 1 150px;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 8px var(--gap);
+  background: var(--card);
+}
+.v3-stat-body { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+.v3-stat-value {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--ink);
+}
+.v3-stat-label {
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  color: var(--ink-soft);
+}
+.v3-stat-sub { font-size: var(--fs-xs); color: var(--ink-faint); font-style: italic; }
+.v3-stat .v3-bar { width: 100%; }
+
+/* ---------------------------------------------------------------------------
+ * WARNINGS
+ * ------------------------------------------------------------------------ */
+.v3-warnings { flex: none; max-height: 25%; overflow-y: auto; }
+.v3-warnings:empty { display: none; }
+
+/* ---------------------------------------------------------------------------
+ * THE DIAGRAM
+ * ------------------------------------------------------------------------ */
+.v3-graph-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--paper-sunk);
+  background-image:
+    /* engraved graph paper */
+    repeating-linear-gradient(0deg, rgba(120,95,60,.10) 0 1px, transparent 1px 26px),
+    repeating-linear-gradient(90deg, rgba(120,95,60,.10) 0 1px, transparent 1px 26px);
+  border: 1px solid var(--rule-strong);
+  box-shadow: inset 0 2px 10px rgba(43,33,24,.22);
+  cursor: grab;
+}
+.v3-graph-viewport.is-dragging { cursor: grabbing; }
+
+.v3-graph-canvas {
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.v3-graph-edges { position: absolute; top: 0; left: 0; overflow: visible; pointer-events: none; }
+.v3-graph-nodes { position: relative; }
+
+.v3-graph-empty {
+  position: absolute;
+  padding: var(--gap-lg);
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.v3-edge {
+  fill: none;
+  stroke: var(--edge);
+  stroke-width: 2;
+}
+.v3-edge.is-back {
+  stroke: var(--edge-back);
+  stroke-dasharray: 6 4;
+}
+.v3-edge-label rect {
+  fill: var(--card);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+.v3-edge-label text {
+  fill: var(--ink);
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---- graph controls ---- */
+.v3-graph-controls {
+  position: absolute;
+  right: 10px; top: 10px;
+  display: flex; flex-direction: column; gap: 3px;
+  z-index: 5;
+}
+.v3-graph-btn {
+  width: 30px; height: 30px;
+  font-size: var(--fs-md);
+  line-height: 1;
+  color: var(--ink);
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+}
+.v3-graph-btn:hover { border-color: var(--brass); }
+
+/* ---------------------------------------------------------------------------
+ * A BUILDING CARD IN THE DIAGRAM
+ * ------------------------------------------------------------------------ */
+.v3-gnode {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--rule-strong);
+  border-top: 4px solid var(--rule);
+  box-shadow: var(--shadow-card);
+  font-size: var(--fs-sm);
+}
+
+.v3-gnode-head {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px;
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border-bottom: 1px solid var(--rule);
+}
+.v3-gnode-title { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.2; }
+.v3-gnode-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.v3-gnode-group {
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  color: var(--ink-faint);
+}
+.v3-gnode-count {
+  flex: none; text-align: center;
+  padding: 2px 7px;
+  background: var(--accent);
+  color: #f5eeda;
+  border-radius: var(--radius);
+  line-height: 1.05;
+}
+.v3-gnode-count-n { display: block; font-family: var(--font-display); font-size: var(--fs-lg); }
+.v3-gnode-count-l { display: block; font-size: 9px; font-variant: small-caps; opacity: .85; }
+
+.v3-gnode-have {
+  padding: 3px 8px;
+  font-size: var(--fs-xs);
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule-hair);
+  color: var(--ink-soft);
+}
+
+.v3-gnode-pms {
+  display: flex; flex-direction: column;
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-pm {
+  display: flex; align-items: center; gap: 5px;
+  padding: 3px 8px;
+  font-size: var(--fs-xs);
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--rule-hair);
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+.v3-pm:last-child { border-bottom: none; }
+.v3-pm:hover { background: var(--paper-3); }
+.v3-pm-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3-pm.is-locked { opacity: .55; }
+.v3-pm.is-locked .v3-pm-name { text-decoration: line-through; }
+
+.v3-gnode-row {
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-gnode-row-label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .05em;
+  color: var(--ink-faint);
+  margin-bottom: 3px;
+}
+.v3-gnode-goods { display: flex; flex-wrap: wrap; gap: 3px; }
+.v3-gnode-row.is-in  { background: rgba(140, 70, 60, .06); }
+.v3-gnode-row.is-out { background: rgba(76, 107, 66, .08); }
+
+.v3-gnode-foot {
+  display: flex; flex-wrap: wrap; gap: 3px;
+  padding: 5px 8px;
+  background: var(--paper-2);
+}
+
+/* ---------------------------------------------------------------------------
+ * PM PICKER (modal)
+ * ------------------------------------------------------------------------ */
+.v3-pm-list { display: flex; flex-direction: column; gap: 4px; }
+.v3-pm-option {
+  display: flex; gap: var(--gap-sm);
+  padding: 8px 10px;
+  text-align: left;
+  background: var(--paper-3);
+  border: 1px solid var(--rule-hair);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+.v3-pm-option:hover { border-color: var(--brass); background: var(--card); }
+.v3-pm-option.is-active { border-color: var(--accent); border-width: 2px; background: var(--card); }
+.v3-pm-option.is-locked { opacity: .6; }
+.v3-pm-option-body { flex: 1; min-width: 0; }
+.v3-pm-option-name { display: block; font-family: var(--font-display); font-size: var(--fs-base); }
+.v3-pm-option-io { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin-top: 4px; }
+.v3-pm-option-jobs { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+.v3-pm-option-lock { margin-top: 4px; font-size: var(--fs-xs); color: var(--bad); }
+.v3-pm-option-note { margin-top: 4px; font-size: var(--fs-xs); font-style: italic; color: var(--ink-soft); }
+
+/* ---------------------------------------------------------------------------
+ * GOALS / IMPORTS lists
+ * ------------------------------------------------------------------------ */
+.v3-goal-list, .v3-import-list, .v3-saved-list {
+  list-style: none; margin: 0 0 var(--gap-sm); padding: 0;
+}
+.v3-goal {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-goal-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3-goal-unit { font-size: var(--fs-xs); color: var(--ink-faint); }
+.v3-goal-add { display: flex; flex-wrap: wrap; gap: var(--gap-xs); align-items: flex-end; }
+.v3-goal-add .v3-select { flex: 1 1 130px; }
+
+.v3-saved { display: flex; align-items: center; gap: 4px; }
+.v3-saved-name {
+  flex: 1; text-align: left; padding: 3px 6px;
+  background: none; border: none; border-bottom: 1px solid var(--rule-hair);
+  cursor: pointer; color: var(--ink); font-family: var(--font-body); font-size: var(--fs-sm);
+}
+.v3-saved-name:hover { color: var(--accent); background: var(--paper-3); }
+
+/* ---------------------------------------------------------------------------
+ * ERA + TECH PICKER
+ * ------------------------------------------------------------------------ */
+.v3-era { display: flex; gap: 3px; }
+.v3-era-btn {
+  width: 30px; height: 28px;
+  font-family: var(--font-display); font-size: var(--fs-md);
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  cursor: pointer; color: var(--ink-soft);
+}
+.v3-era-btn.is-active {
+  background: var(--accent); color: #f5eeda; border-color: var(--accent);
+}
+
+.v3-tech-picker { max-height: 60vh; }
+.v3-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 3px;
+}
+.v3-tech {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 7px;
+  font-size: var(--fs-sm);
+  background: var(--paper-3);
+  border: 1px solid var(--rule-hair);
+  border-left-width: 3px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.v3-tech.is-production { border-left-color: var(--ok); }
+.v3-tech.is-military   { border-left-color: var(--bad); }
+.v3-tech.is-society    { border-left-color: var(--strata-middle); }
+.v3-tech.is-on { background: var(--card); font-weight: 600; }
+
+/* ---------------------------------------------------------------------------
+ * BUILD ORDER
+ * ------------------------------------------------------------------------ */
+.v3-mode { display: flex; gap: 2px; margin-bottom: var(--gap-sm); }
+.v3-mode-btn {
+  flex: 1;
+  padding: 4px 6px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-variant: small-caps;
+  letter-spacing: .04em;
+  background: linear-gradient(var(--paper-3), var(--paper-2));
+  border: 1px solid var(--rule-strong);
+  cursor: pointer; color: var(--ink-soft);
+}
+.v3-mode-btn.is-active { background: var(--accent); color: #f5eeda; border-color: var(--accent); }
+
+.v3-order-list { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.v3-order-item {
+  display: flex; align-items: center; gap: var(--gap-sm);
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-order-item.is-priority { background: rgba(168, 135, 63, .12); }
+.v3-order-step {
+  flex: none;
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  background: var(--ink); color: var(--paper-3);
+  border-radius: 50%;
+  font-size: var(--fs-sm);
+}
+.v3-order-item.is-priority .v3-order-step { background: var(--brass); color: var(--ink); }
+.v3-order-body { flex: 1; min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.v3-order-name { font-family: var(--font-display); font-size: var(--fs-base); }
+.v3-order-meta { font-size: var(--fs-xs); color: var(--ink-soft); }
+.v3-order-why { font-size: var(--fs-xs); font-style: italic; color: var(--brass); }
+
+.v3-order-total {
+  margin-top: var(--gap-sm);
+  padding: var(--gap-sm);
+  background: var(--paper-2);
+  border: 1px solid var(--rule-hair);
+  font-size: var(--fs-sm);
+}
+.v3-order-total > div { display: flex; justify-content: space-between; gap: var(--gap-sm); }
+
+/* ---------------------------------------------------------------------------
+ * LEDGER
+ * ------------------------------------------------------------------------ */
+.v3-ledger { table-layout: fixed; }
+.v3-ledger th, .v3-ledger td { padding: 3px 4px; }
+.v3-ledger col.c-icon { width: 30px; }
+.v3-ledger col.c-name { width: auto; }
+.v3-ledger col.c-num  { width: 58px; }
+.v3-ledger tr.is-deficit { background: rgba(143, 56, 44, .12); }
+.v3-ledger tr.is-surplus { background: rgba(76, 107, 66, .10); }
+.v3-ledger-name {
+  display: block;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.v3-ledger-name .v3-pill { margin-left: 4px; }
+.v3-balance { font-weight: 700; }
+.v3-ledger tr.is-deficit .v3-balance { color: var(--bad); }
+.v3-ledger tr.is-surplus .v3-balance { color: var(--ok); }
+.v3-ledger-legend {
+  margin-top: var(--gap-sm);
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+  display: flex; flex-wrap: wrap; gap: var(--gap-sm);
+}
+.v3-ledger-legend span::before {
+  content: ""; display: inline-block;
+  width: 9px; height: 9px; margin-right: 4px;
+  border: 1px solid var(--rule);
+}
+.v3-ledger-legend .lg-deficit::before { background: rgba(143, 56, 44, .35); }
+.v3-ledger-legend .lg-surplus::before { background: rgba(76, 107, 66, .30); }
+.v3-ledger-legend .lg-balanced::before { background: var(--card); }
+
+/* ---------------------------------------------------------------------------
+ * CONSTRUCTION SECTOR SUGGESTION
+ * ------------------------------------------------------------------------ */
+.v3-cs {
+  margin-bottom: var(--gap-sm);
+  padding: var(--gap-sm);
+  background: rgba(168, 135, 63, .12);
+  border: 1px solid var(--brass);
+}
+.v3-cs-head { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.v3-cs-head strong { flex: 1; font-family: var(--font-display); }
+.v3-cs-row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.v3-cs-row .v3-input-num { width: 62px; }
+.v3-cs-verdict { font-size: var(--fs-xs); color: var(--ink-soft); font-style: italic; }
+.v3-cs-verdict strong { color: var(--ok); font-style: normal; }
+.v3-cs-alts { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+.v3-cs-alt {
+  padding: 2px 6px; font-size: var(--fs-xs);
+  background: var(--paper-3); border: 1px solid var(--rule-hair);
+  border-radius: var(--radius); cursor: pointer;
+  font-family: var(--font-body); color: var(--ink);
+}
+.v3-cs-alt:hover { border-color: var(--brass); }
+.v3-cs-alt.is-best { border-color: var(--ok); font-weight: 700; }
+
+/* ---------------------------------------------------------------------------
+ * WORKFORCE BREAKDOWN
+ * ------------------------------------------------------------------------ */
+.v3-wf-total {
+  display: flex; align-items: baseline; gap: var(--gap-sm);
+  padding-bottom: var(--gap-sm);
+  border-bottom: 3px double var(--rule-strong);
+  margin-bottom: var(--gap-sm);
+}
+.v3-wf-total-n { font-family: var(--font-display); font-size: var(--fs-xl); }
+.v3-wf-total-l { font-size: var(--fs-xs); color: var(--ink-soft); font-variant: small-caps; }
+
+.v3-wf-strata { margin-bottom: var(--gap-sm); }
+.v3-wf-strata-head {
+  display: flex; align-items: baseline; gap: 6px;
+  font-variant: small-caps; letter-spacing: .05em;
+  font-size: var(--fs-sm);
+  border-left: 4px solid var(--rule);
+  padding-left: 6px;
+}
+.v3-wf-strata.is-poor   .v3-wf-strata-head { border-left-color: var(--strata-poor); }
+.v3-wf-strata.is-middle .v3-wf-strata-head { border-left-color: var(--strata-middle); }
+.v3-wf-strata.is-upper  .v3-wf-strata-head { border-left-color: var(--strata-upper); }
+.v3-wf-strata-head strong { margin-left: auto; font-family: var(--font-display); }
+.v3-wf-strata-head em { font-style: normal; color: var(--ink-faint); font-size: var(--fs-xs); }
+
+.v3-wf-jobs { margin: 4px 0 0; padding-left: 10px; list-style: none; }
+.v3-wf-job {
+  display: flex; align-items: center; gap: 6px;
+  padding: 2px 0; font-size: var(--fs-sm);
+  border-bottom: 1px solid var(--rule-hair);
+}
+.v3-wf-job-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3-wf-job-qual { font-size: var(--fs-xs); color: var(--ink-faint); }
+.v3-wf-job-n { font-family: var(--font-display); }
+.v3-wf-job.is-educated { background: rgba(168, 135, 63, .10); }
+
+/* ---------------------------------------------------------------------------
+ * DRAGGING A CARD
+ * Cards can be rearranged by hand; the arrows are redrawn from the measured
+ * boxes on every frame, so they follow rather than snap back at the end.
+ * ------------------------------------------------------------------------ */
+.v3-gnode { cursor: grab; }
+.v3-gnode.is-grabbed {
+  cursor: grabbing;
+  z-index: 10;
+  box-shadow: var(--shadow-lift);
+  border-color: var(--brass);
+}
+.v3-gnode button, .v3-gnode select, .v3-gnode input { cursor: pointer; }

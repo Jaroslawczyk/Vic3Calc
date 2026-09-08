@@ -1,0 +1,18 @@
+# Windows Script Host is happiest with CRLF, and the launcher is the one file
+# that absolutely must work after a clone on any machine.
+# Windows Script Host лучше всего работает с CRLF, а лаунчер - тот самый файл,
+# который обязан работать после клонирования на любой машине.
+*.vbs text eol=crlf
+
+# Everything else: normalise in the repository, native on checkout.
+# Всё остальное: нормализуем в репозитории, на диск - как принято в системе.
+*.js   text
+*.css  text
+*.html text
+*.md   text
+*.sh   text eol=lf
+
+# Binary - never touch these.
+*.png  binary
+*.ico  binary
+*.pdf  binary
